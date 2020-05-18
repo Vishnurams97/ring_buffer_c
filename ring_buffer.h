@@ -4,6 +4,7 @@
 
 #include "app_error.h"
 
+typedef uint32_t ret_code_t;
 #define BFR_SUCCESS 0
 #define BFR_ERROR 1
 
