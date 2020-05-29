@@ -92,5 +92,16 @@ int get_queue_capacity(ring_buffer_t * p_buffer_t){
 }
 
 int get_queue_mems_length(ring_buffer_t * p_buffer_t){
-    return p_buffer_t->is_full ? p_buffer_t->total_slots: p_buffer_t->head - p_buffer_t->tail ;
+    if(p_buffer_t->is_full){
+        return p_buffer_t->total_slots;
+    }
+    else if(p_buffer_t->head - p_buffer_t->tail < 0){
+        p_buffer_t->tail -= p_buffer_t->head + 1;
+        p_buffer_t->head -= p_buffer_t->head + 1;
+        p_buffer_t->head += p_buffer_t->total_slots;
+        return p_buffer_t->head - p_buffer_t->tail;
+    }
+    else{
+        return p_buffer_t->head - p_buffer_t->tail;
+    }
 }
